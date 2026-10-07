@@ -31,6 +31,45 @@ a{color:#101521}a:hover{color:#1D7A43}
 .yes{font-family:'IBM Plex Mono',monospace;font-weight:600;color:#1D7A43}
 .no{font-family:'IBM Plex Mono',monospace;color:#B9C1CF}
 </style>
+<style>
+.progress{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:#D4F25A;z-index:100}
+.marquee{overflow:hidden;background:#D4F25A;color:#101521;border-block:1px solid #101521}
+.marquee-track{display:flex;width:max-content}
+.marquee span{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(26px,4vw,48px);padding:16px 22px;white-space:nowrap;letter-spacing:-.02em}
+.marquee .sep{color:#1D7A43;font-size:clamp(18px,2.4vw,28px);align-self:center}
+@keyframes marq{to{transform:translateX(-50%)}}
+.tick{display:inline-block}
+.card,.tile{position:relative}
+.card::after,.tile::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%),rgba(212,242,90,.28),transparent 50%);opacity:0;transition:opacity .3s}
+.card:hover::after,.tile:hover::after{opacity:1}
+.card:hover,.tile:hover{border-color:#101521 !important;box-shadow:0 28px 50px -28px rgba(16,21,33,.4)}
+.mx tbody tr{transition:background .2s}
+.mx tbody tr:hover{background:#F5FADF}
+.cursor{position:fixed;left:0;top:0;width:12px;height:12px;border-radius:50%;background:#fff;pointer-events:none;z-index:200;mix-blend-mode:difference;transition:width .3s cubic-bezier(.2,.8,.2,1),height .3s cubic-bezier(.2,.8,.2,1)}
+.cursor.mid{width:34px;height:34px}
+.cursor.big{width:64px;height:64px}
+.motion .marquee-track{animation:marq 40s linear infinite}
+.motion .marquee:hover .marquee-track{animation-play-state:paused}
+.motion h1 .line{display:inline-block;overflow:hidden;padding-bottom:.06em}
+.motion .char{display:inline-block;transform:translateY(105%);animation:rise 1s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--i) * 45ms + .15s)}
+@keyframes rise{to{transform:none}}
+.motion .hero-fade{opacity:0;animation:fadeUp 1s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:var(--d)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.motion .run-row{opacity:0;transform:translateX(-14px);transition:opacity .5s,transform .5s cubic-bezier(.2,.8,.2,1)}
+.motion .run-row.in{opacity:1;transform:none}
+.motion .pulse{animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.motion .rv{opacity:0;transform:translateY(48px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.motion .rv.in{opacity:1;transform:none}
+.motion .rv.done{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s,border-color .35s;transition-delay:0s}
+.motion .split .w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em}
+.motion .split .wi{display:inline-block;transform:translateY(105%);transition:transform .9s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--i) * 60ms)}
+.motion .split.in .wi{transform:none}
+.motion .tick{opacity:0;transform:scale(.3);transition:opacity .3s,transform .45s cubic-bezier(.3,1.7,.5,1)}
+.motion .tick.in{opacity:1;transform:none}
+@media (pointer:coarse){.cursor{display:none}}
+
+</style>
 </head>
 <body>
 <main style="font-family: 'IBM Plex Sans', sans-serif; color: #101521; background: #F3F5F8">
@@ -52,14 +91,14 @@ a{color:#101521}a:hover{color:#1D7A43}
 <h1 class="disp" style="margin: 0; font-size: clamp(64px, 10vw, 136px); font-weight: 800; line-height: .92; letter-spacing: -.04em">Harshini V</h1>
 <p style="margin: 0; font-size: 21px; line-height: 1.55; color: #C9D0DC; max-width: 640px">I test the software before its users do. 17 live products across ERPs, SaaS platforms, mobile apps, e-commerce and business websites, as QA Lead on six of them and founding team member on Hancod's core product, Duxbe.</p>
 </div>
-<div style="flex: 1 1 380px; min-width: 0; border: 1px solid #2E3647; border-radius: 14px; padding: 24px; background: #161C2A" class="mono">
+<div id="run" style="flex: 1 1 380px; min-width: 0; border: 1px solid #2E3647; border-radius: 14px; padding: 24px; background: #161C2A" class="mono">
 <div style="display: flex; justify-content: space-between; font-size: 12px; color: #A7B0C0; letter-spacing: .1em; padding-bottom: 16px; border-bottom: 1px solid #2E3647">
 <span>TEST RUN · PORTFOLIO</span>
-<span style="color: #D4F25A">● PASSED</span>
+<span id="runstatus" style="color: #D4F25A">● PASSED</span>
 </div>
 <div style="display: flex; flex-direction: column; gap: 12px; padding-top: 16px; font-size: 14px">
-<div style="display: flex; justify-content: space-between; gap: 16px"><span style="color: #A7B0C0">Projects</span><span style="color: #EEF1F6">17</span></div>
-<div style="display: flex; justify-content: space-between; gap: 16px"><span style="color: #A7B0C0">As QA Lead</span><span style="color: #EEF1F6">6</span></div>
+<div style="display: flex; justify-content: space-between; gap: 16px"><span style="color: #A7B0C0">Projects</span><span data-count="17" style="color: #EEF1F6">17</span></div>
+<div style="display: flex; justify-content: space-between; gap: 16px"><span style="color: #A7B0C0">As QA Lead</span><span data-count="6" style="color: #EEF1F6">6</span></div>
 <div style="display: flex; justify-content: space-between; gap: 16px"><span style="color: #A7B0C0">Platforms</span><span style="color: #EEF1F6; text-align: right">Web · Android · iOS · Tablet</span></div>
 <div style="display: flex; justify-content: space-between; gap: 16px"><span style="color: #A7B0C0">Stacks</span><span style="color: #EEF1F6; text-align: right">Flutter · Next.js · FlutterFlow · WordPress</span></div>
 <div style="display: flex; justify-content: space-between; gap: 16px"><span style="color: #A7B0C0">Client markets</span><span style="color: #EEF1F6; text-align: right">India · Qatar · UAE</span></div>
@@ -68,6 +107,7 @@ a{color:#101521}a:hover{color:#1D7A43}
 </div>
 </div>
 </header>
+<div class="marquee" aria-hidden="true"><div class="marquee-track"><span>Flutter</span><span class="sep">✦</span><span>Next.js</span><span class="sep">✦</span><span>ERP</span><span class="sep">✦</span><span>POS</span><span class="sep">✦</span><span>FlutterFlow</span><span class="sep">✦</span><span>WordPress</span><span class="sep">✦</span><span>Regression</span><span class="sep">✦</span><span>UAT</span><span class="sep">✦</span><span>Payments</span><span class="sep">✦</span><span>Role-based access</span><span class="sep">✦</span><span>Integration</span><span class="sep">✦</span><span>Store releases</span><span class="sep">✦</span><span>Shift-left</span><span class="sep">✦</span><span>Flutter</span><span class="sep">✦</span><span>Next.js</span><span class="sep">✦</span><span>ERP</span><span class="sep">✦</span><span>POS</span><span class="sep">✦</span><span>FlutterFlow</span><span class="sep">✦</span><span>WordPress</span><span class="sep">✦</span><span>Regression</span><span class="sep">✦</span><span>UAT</span><span class="sep">✦</span><span>Payments</span><span class="sep">✦</span><span>Role-based access</span><span class="sep">✦</span><span>Integration</span><span class="sep">✦</span><span>Store releases</span><span class="sep">✦</span><span>Shift-left</span><span class="sep">✦</span></div></div>
 
 <section style="padding: 96px 24px 32px">
 <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px">
@@ -76,12 +116,12 @@ a{color:#101521}a:hover{color:#1D7A43}
 <h2 class="disp" style="margin: 0; font-size: 48px; font-weight: 700; letter-spacing: -.03em; line-height: 1.05">Quality from the design file to the store release</h2>
 </div>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px">
-<div style="background: #FFFFFF; border: 1px solid #D9DEE7; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px"><span class="mono" style="font-size: 13px; color: #1D7A43">/01</span><h3 class="disp" style="margin: 0; font-size: 22px; font-weight: 700">Shift-left design reviews</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2A3140">Figma screens reviewed before development, so missing flows and usability gaps are caught early.</p></div>
-<div style="background: #FFFFFF; border: 1px solid #D9DEE7; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px"><span class="mono" style="font-size: 13px; color: #1D7A43">/02</span><h3 class="disp" style="margin: 0; font-size: 22px; font-weight: 700">End-to-end and integration</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2A3140">Orders, stock, invoices and bookings checked as they move between apps, ERPs and admin panels.</p></div>
-<div style="background: #FFFFFF; border: 1px solid #D9DEE7; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px"><span class="mono" style="font-size: 13px; color: #1D7A43">/03</span><h3 class="disp" style="margin: 0; font-size: 22px; font-weight: 700">Payments and transactions</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2A3140">Payment gateways, Google Pay, in-app purchases, points wallets, multi-currency and payroll calculations.</p></div>
-<div style="background: #FFFFFF; border: 1px solid #D9DEE7; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px"><span class="mono" style="font-size: 13px; color: #1D7A43">/04</span><h3 class="disp" style="margin: 0; font-size: 22px; font-weight: 700">Roles and access</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2A3140">Role-based access across talent and directors, admins, inspectors, clients, dealers and centres.</p></div>
-<div style="background: #FFFFFF; border: 1px solid #D9DEE7; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px"><span class="mono" style="font-size: 13px; color: #1D7A43">/05</span><h3 class="disp" style="margin: 0; font-size: 22px; font-weight: 700">Cross-platform releases</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2A3140">Web, Android, iOS and tablet builds, App Store and Play Store releases, and regression every cycle.</p></div>
-<div style="background: #FFFFFF; border: 1px solid #D9DEE7; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px"><span class="mono" style="font-size: 13px; color: #1D7A43">/06</span><h3 class="disp" style="margin: 0; font-size: 22px; font-weight: 700">Coordination and documentation</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2A3140">Sprint priorities across dev, UI/UX and QA, module documentation, and competitor gap analysis.</p></div>
+<div class="tile" style="background: #FFFFFF; border: 1px solid #D9DEE7; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px"><span class="mono" style="font-size: 13px; color: #1D7A43">/01</span><h3 class="disp" style="margin: 0; font-size: 22px; font-weight: 700">Shift-left design reviews</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2A3140">Figma screens reviewed before development, so missing flows and usability gaps are caught early.</p></div>
+<div class="tile" style="background: #FFFFFF; border: 1px solid #D9DEE7; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px"><span class="mono" style="font-size: 13px; color: #1D7A43">/02</span><h3 class="disp" style="margin: 0; font-size: 22px; font-weight: 700">End-to-end and integration</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2A3140">Orders, stock, invoices and bookings checked as they move between apps, ERPs and admin panels.</p></div>
+<div class="tile" style="background: #FFFFFF; border: 1px solid #D9DEE7; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px"><span class="mono" style="font-size: 13px; color: #1D7A43">/03</span><h3 class="disp" style="margin: 0; font-size: 22px; font-weight: 700">Payments and transactions</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2A3140">Payment gateways, Google Pay, in-app purchases, points wallets, multi-currency and payroll calculations.</p></div>
+<div class="tile" style="background: #FFFFFF; border: 1px solid #D9DEE7; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px"><span class="mono" style="font-size: 13px; color: #1D7A43">/04</span><h3 class="disp" style="margin: 0; font-size: 22px; font-weight: 700">Roles and access</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2A3140">Role-based access across talent and directors, admins, inspectors, clients, dealers and centres.</p></div>
+<div class="tile" style="background: #FFFFFF; border: 1px solid #D9DEE7; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px"><span class="mono" style="font-size: 13px; color: #1D7A43">/05</span><h3 class="disp" style="margin: 0; font-size: 22px; font-weight: 700">Cross-platform releases</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2A3140">Web, Android, iOS and tablet builds, App Store and Play Store releases, and regression every cycle.</p></div>
+<div class="tile" style="background: #FFFFFF; border: 1px solid #D9DEE7; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px"><span class="mono" style="font-size: 13px; color: #1D7A43">/06</span><h3 class="disp" style="margin: 0; font-size: 22px; font-weight: 700">Coordination and documentation</h3><p style="margin: 0; font-size: 15px; line-height: 1.55; color: #2A3140">Sprint priorities across dev, UI/UX and QA, module documentation, and competitor gap analysis.</p></div>
 </div>
 </div>
 </section>
@@ -92,27 +132,27 @@ a{color:#101521}a:hover{color:#1D7A43}
 <span class="label">02 — Coverage matrix</span>
 <h2 class="disp" style="margin: 0; font-size: 48px; font-weight: 700; letter-spacing: -.03em; line-height: 1.05">17 projects, every platform</h2>
 </div>
-<div style="overflow-x: auto; background: #FFFFFF; border: 1px solid #D9DEE7; border-radius: 16px">
+<div data-rv style="overflow-x: auto; background: #FFFFFF; border: 1px solid #D9DEE7; border-radius: 16px">
 <table class="mx" style="width: 100%; border-collapse: collapse">
 <thead><tr><th>ID</th><th>Project</th><th>Type</th><th>Stack</th><th>Web</th><th>Mobile</th><th>Tablet</th><th>Role</th></tr></thead>
 <tbody>
-<tr><td class="mono" style="color: #1D7A43">TC-01</td><td style="font-weight: 600">Duxbe</td><td>POS-oriented ERP</td><td class="mono">Flutter</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td><span class="lead">LEAD · PC</span></td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-02</td><td style="font-weight: 600">DineNorder</td><td>Restaurant SaaS ERP + app</td><td class="mono">Flutter</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td><span class="lead">LEAD</span></td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-03</td><td style="font-weight: 600">Seoul Oasis ERP</td><td>Distribution ERP + SFA app</td><td class="mono">Flutter</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td><span class="lead">LEAD</span></td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-04</td><td style="font-weight: 600">Dreamact</td><td>Talent and audition app</td><td class="mono">Flutter</td><td class="no">—</td><td class="yes">✓</td><td class="no">—</td><td><span class="lead">LEAD</span></td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-05</td><td style="font-weight: 600">Titalive</td><td>Live streaming app</td><td class="mono">Flutter</td><td class="no">—</td><td class="yes">✓</td><td class="no">—</td><td>QA</td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-06</td><td style="font-weight: 600">Qube Inspection</td><td>Inspection and certification</td><td class="mono">Next.js</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td>QA</td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-07</td><td style="font-weight: 600">Bega Sportswear</td><td>Custom sportswear store</td><td class="mono">Next.js</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td>QA</td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-08</td><td style="font-weight: 600">Restlon ERP</td><td>Distribution ERP + dealer app</td><td class="mono">Flutter</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td><span class="lead">LEAD</span></td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-09</td><td style="font-weight: 600">Josapp</td><td>Higher education portal</td><td class="mono">Flutter</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td>QA</td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-10</td><td style="font-weight: 600">Nolta</td><td>Cookware e-commerce</td><td class="mono">WordPress</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td>QA</td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-11</td><td style="font-weight: 600">Navallance</td><td>Marine spare parts site</td><td class="mono">WordPress</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td>QA</td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-12</td><td style="font-weight: 600">Hantron</td><td>Home automation site</td><td class="mono">Next.js</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td>QA</td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-13</td><td style="font-weight: 600">iLOVEnge</td><td>Airport lounge app + admin</td><td class="mono">FlutterFlow · Next.js</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td>QA</td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-14</td><td style="font-weight: 600">Heli Seeker</td><td>Rehab and therapy booking</td><td class="mono">Next.js</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td>QA</td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-15</td><td style="font-weight: 600">Merit</td><td>CRM, HRMS and Tech suite</td><td class="mono">Web</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td><span class="lead">LEAD</span></td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-16</td><td style="font-weight: 600">Buy and Trust</td><td>E-commerce on Duxbe</td><td class="mono">Duxbe backend</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td>QA</td></tr>
-<tr><td class="mono" style="color: #1D7A43">TC-17</td><td style="font-weight: 600">Rotana</td><td>Car rental service</td><td class="mono">Next.js</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td>QA</td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-01</td><td style="font-weight: 600">Duxbe</td><td>POS-oriented ERP</td><td class="mono">Flutter</td><td class="yes"><span class="tick">✓</span></td><td class="yes"><span class="tick">✓</span></td><td class="yes"><span class="tick">✓</span></td><td><span class="lead">LEAD · PC</span></td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-02</td><td style="font-weight: 600">DineNorder</td><td>Restaurant SaaS ERP + app</td><td class="mono">Flutter</td><td class="yes"><span class="tick">✓</span></td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td><span class="lead">LEAD</span></td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-03</td><td style="font-weight: 600">Seoul Oasis ERP</td><td>Distribution ERP + SFA app</td><td class="mono">Flutter</td><td class="yes"><span class="tick">✓</span></td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td><span class="lead">LEAD</span></td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-04</td><td style="font-weight: 600">Dreamact</td><td>Talent and audition app</td><td class="mono">Flutter</td><td class="no"><span class="tick">—</span></td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td><span class="lead">LEAD</span></td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-05</td><td style="font-weight: 600">Titalive</td><td>Live streaming app</td><td class="mono">Flutter</td><td class="no"><span class="tick">—</span></td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td>QA</td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-06</td><td style="font-weight: 600">Qube Inspection</td><td>Inspection and certification</td><td class="mono">Next.js</td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td class="no"><span class="tick">—</span></td><td>QA</td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-07</td><td style="font-weight: 600">Bega Sportswear</td><td>Custom sportswear store</td><td class="mono">Next.js</td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td class="no"><span class="tick">—</span></td><td>QA</td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-08</td><td style="font-weight: 600">Restlon ERP</td><td>Distribution ERP + dealer app</td><td class="mono">Flutter</td><td class="yes"><span class="tick">✓</span></td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td><span class="lead">LEAD</span></td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-09</td><td style="font-weight: 600">Josapp</td><td>Higher education portal</td><td class="mono">Flutter</td><td class="yes"><span class="tick">✓</span></td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td>QA</td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-10</td><td style="font-weight: 600">Nolta</td><td>Cookware e-commerce</td><td class="mono">WordPress</td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td class="no"><span class="tick">—</span></td><td>QA</td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-11</td><td style="font-weight: 600">Navallance</td><td>Marine spare parts site</td><td class="mono">WordPress</td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td class="no"><span class="tick">—</span></td><td>QA</td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-12</td><td style="font-weight: 600">Hantron</td><td>Home automation site</td><td class="mono">Next.js</td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td class="no"><span class="tick">—</span></td><td>QA</td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-13</td><td style="font-weight: 600">iLOVEnge</td><td>Airport lounge app + admin</td><td class="mono">FlutterFlow · Next.js</td><td class="yes"><span class="tick">✓</span></td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td>QA</td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-14</td><td style="font-weight: 600">Heli Seeker</td><td>Rehab and therapy booking</td><td class="mono">Next.js</td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td class="no"><span class="tick">—</span></td><td>QA</td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-15</td><td style="font-weight: 600">Merit</td><td>CRM, HRMS and Tech suite</td><td class="mono">Web</td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td class="no"><span class="tick">—</span></td><td><span class="lead">LEAD</span></td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-16</td><td style="font-weight: 600">Buy and Trust</td><td>E-commerce on Duxbe</td><td class="mono">Duxbe backend</td><td class="yes"><span class="tick">✓</span></td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td>QA</td></tr>
+<tr><td class="mono" style="color: #1D7A43">TC-17</td><td style="font-weight: 600">Rotana</td><td>Car rental service</td><td class="mono">Next.js</td><td class="yes"><span class="tick">✓</span></td><td class="no"><span class="tick">—</span></td><td class="no"><span class="tick">—</span></td><td>QA</td></tr>
 </tbody>
 </table>
 </div>
@@ -478,5 +518,90 @@ a{color:#101521}a:hover{color:#1D7A43}
 </footer>
 
 </main>
+<script>
+(function(){
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var fine=matchMedia('(pointer: fine)').matches;
+var root=document.documentElement;
+var bar=document.createElement('div');bar.className='progress';document.body.prepend(bar);
+var heroName=document.querySelector('header h1');
+function onScroll(){
+  var h=root.scrollHeight-innerHeight;bar.style.transform='scaleX('+(h>0?scrollY/h:0)+')';
+  if(!reduce&&heroName){var y=Math.min(scrollY,innerHeight);heroName.style.transform='translateY('+(y*0.28)+'px)';heroName.style.opacity=String(Math.max(0,1-y/(innerHeight*0.85)));}
+}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+if(reduce)return;
+document.body.classList.add('motion');
+
+/* hero name: letter rise */
+var txt=heroName.textContent;heroName.setAttribute('aria-label',txt);heroName.textContent='';
+var line=document.createElement('span');line.className='line';line.setAttribute('aria-hidden','true');
+Array.from(txt).forEach(function(c,i){var s=document.createElement('span');s.className='char';s.style.setProperty('--i',i);s.textContent=c===' '?' ':c;line.appendChild(s);});
+heroName.appendChild(line);
+[['header nav',0],['header .lead',0.1],['header p',0.6],['#run',0.85]].forEach(function(a){var e=document.querySelector(a[0]);if(e){e.classList.add('hero-fade');e.style.setProperty('--d',a[1]+'s');}});
+
+/* test run: rows tick in, counters, RUNNING -> PASSED */
+function countUp(el){var end=+el.dataset.count,t0=performance.now(),dur=1000;el.textContent='0';
+  (function f(t){var p=Math.min((t-t0)/dur,1);el.textContent=Math.round(end*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f);})(t0);}
+var run=document.getElementById('run'),st=document.getElementById('runstatus');
+if(run&&st){
+  var rows=Array.from(run.querySelectorAll(':scope > div:nth-child(2) > div'));
+  rows.forEach(function(r){r.classList.add('run-row');});
+  st.textContent='○ RUNNING…';st.style.color='#A7B0C0';
+  rows.forEach(function(r,i){setTimeout(function(){r.classList.add('in');var c=r.querySelector('[data-count]');if(c)countUp(c);},1500+i*280);});
+  setTimeout(function(){st.textContent='● PASSED';st.style.color='#D4F25A';st.classList.add('pulse');},1500+rows.length*280+500);
+}
+
+/* section headings: word mask reveal */
+document.querySelectorAll('main h2').forEach(function(h){
+  var words=h.textContent.trim().split(/\s+/);h.textContent='';
+  words.forEach(function(w,i){var o=document.createElement('span');o.className='w';var n=document.createElement('span');n.className='wi';n.style.setProperty('--i',i);n.textContent=w;o.appendChild(n);h.appendChild(o);h.appendChild(document.createTextNode(' '));});
+  h.classList.add('split');
+});
+
+/* scroll reveals with stagger */
+document.querySelectorAll('.tile,.card,main section article:not(.card),main section article:not(.card) li,[data-rv],main section .label').forEach(function(el){el.classList.add('rv');});
+document.querySelectorAll('.rv').forEach(function(el){
+  var sib=Array.from(el.parentElement.children).filter(function(c){return c.classList.contains('rv');});
+  var i=sib.indexOf(el);el.style.setProperty('--d',(el.tagName==='LI'?0.3+i*0.08:(i%3)*0.1)+'s');
+});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var t=e.target;t.classList.add('in');io.unobserve(t);setTimeout(function(){t.classList.add('done');},1700);}});},{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv,.split').forEach(function(el){io.observe(el);});
+
+/* coverage matrix: ticks pop in row by row */
+var tbl=document.querySelector('.mx');
+if(tbl){
+  var mrows=Array.from(tbl.querySelectorAll('tbody tr'));
+  mrows.forEach(function(r){r.querySelectorAll('.lead').forEach(function(l){l.classList.add('tick');});});
+  var io2=new IntersectionObserver(function(es){if(es[0].isIntersecting){mrows.forEach(function(r,i){setTimeout(function(){r.querySelectorAll('.tick').forEach(function(t){t.classList.add('in');});},300+i*75);});io2.disconnect();}},{threshold:0.2});
+  io2.observe(tbl);
+}
+
+if(!fine)return;
+/* card spotlight + tilt */
+document.querySelectorAll('.card,.tile').forEach(function(c){
+  c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+    c.style.setProperty('--mx',x+'px');c.style.setProperty('--my',y+'px');
+    if(c.classList.contains('done')){c.style.transform='perspective(1000px) rotateX('+(((y/r.height)-0.5)*-4)+'deg) rotateY('+(((x/r.width)-0.5)*4)+'deg) translateY(-6px)';}});
+  c.addEventListener('pointerleave',function(){c.style.transform='';});
+});
+/* blend cursor */
+var cur=document.createElement('div');cur.className='cursor';document.body.appendChild(cur);
+var mx=-100,my=-100,cx=-100,cy=-100;
+addEventListener('pointermove',function(e){mx=e.clientX;my=e.clientY;});
+(function loop(){cx+=(mx-cx)*0.2;cy+=(my-cy)*0.2;cur.style.transform='translate3d('+cx+'px,'+cy+'px,0) translate(-50%,-50%)';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,.card,.tile,.marquee').forEach(function(el){
+  el.addEventListener('pointerenter',function(){cur.classList.add(el.matches('a')?'big':'mid');});
+  el.addEventListener('pointerleave',function(){cur.classList.remove('big','mid');});
+});
+/* magnetic links */
+document.querySelectorAll('header nav a, footer a').forEach(function(a){
+  a.style.display='inline-block';a.style.transition='transform .3s cubic-bezier(.2,.8,.2,1)';
+  a.addEventListener('pointermove',function(e){var r=a.getBoundingClientRect();a.style.transform='translate('+((e.clientX-r.left-r.width/2)*0.35)+'px,'+((e.clientY-r.top-r.height/2)*0.45)+'px)';});
+  a.addEventListener('pointerleave',function(){a.style.transform='';});
+});
+})();
+
+</script>
 </body>
 </html>
