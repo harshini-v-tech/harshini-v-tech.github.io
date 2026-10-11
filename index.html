@@ -8,17 +8,26 @@
 <meta property="og:title" content="Harshini V – QA Portfolio">
 <meta property="og:description" content="QA Engineer and Project Coordinator at Hancod. 17 projects, QA Lead on six.">
 <style>html{scroll-behavior:smooth}*{box-sizing:border-box}.shot{display:none !important}
-.gal{margin-top:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.gal.one{grid-template-columns:minmax(0,1fr)}
-.gal-item{all:unset;box-sizing:border-box;cursor:zoom-in;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid #D9DEE7;background:#FFFFFF;transition:border-color .2s,box-shadow .2s}
-.gal-item:hover{border-color:#101521;box-shadow:0 14px 30px -18px rgba(16,21,33,.45)}
+.gal{margin-top:auto;display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:4px 2px 12px;scrollbar-width:thin;scrollbar-color:#B9C1CF transparent}
+.gal::-webkit-scrollbar{height:6px}.gal::-webkit-scrollbar-thumb{background:#B9C1CF;border-radius:6px}
+.gal.dark{scrollbar-color:#3A4458 transparent}.gal.dark::-webkit-scrollbar-thumb{background:#3A4458}
+.gal-item{all:unset;box-sizing:border-box;flex:0 0 min(520px,86%);scroll-snap-align:start;cursor:zoom-in;display:flex;flex-direction:column;border-radius:12px;overflow:hidden;border:1px solid #C9D0DC;background:#FFFFFF;box-shadow:0 10px 24px -16px rgba(16,21,33,.35);transition:border-color .2s,box-shadow .2s,transform .2s}
+.gal.one .gal-item{flex-basis:100%}
+.gal-item::before{content:"";display:block;height:24px;flex:none;border-bottom:1px solid #D9DEE7;background:radial-gradient(circle at 14px 12px,#FF5F57 4px,transparent 4.5px),radial-gradient(circle at 28px 12px,#FEBC2E 4px,transparent 4.5px),radial-gradient(circle at 42px 12px,#28C840 4px,transparent 4.5px),#EEF1F6}
+.gal-item:hover{border-color:#101521;transform:translateY(-2px);box-shadow:0 18px 34px -18px rgba(16,21,33,.5)}
 .gal-item:focus-visible{outline:2px solid #1D7A43;outline-offset:2px}
-.gal-item img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top left;display:block;transition:transform .35s}
-.gal-item:hover img{transform:scale(1.03)}
-.gal-item span{font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.4;color:#4A5263;padding:8px 10px}
+.gal-item img{width:100%;height:auto;display:block;background:#fff}
+.gal-item span{font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.4;color:#4A5263;padding:8px 12px;border-top:1px solid #E3E7EE}
 .gal.dark .gal-item{border-color:#2E3647;background:#161C2A}
+.gal.dark .gal-item::before{background:radial-gradient(circle at 14px 12px,#FF5F57 4px,transparent 4.5px),radial-gradient(circle at 28px 12px,#FEBC2E 4px,transparent 4.5px),radial-gradient(circle at 42px 12px,#28C840 4px,transparent 4.5px),#1E2636;border-bottom-color:#2E3647}
 .gal.dark .gal-item:hover{border-color:#D4F25A}
-.gal.dark .gal-item span{color:#A7B0C0}
+.gal.dark .gal-item span{color:#A7B0C0;border-top-color:#2E3647}
+.gal-wrap{position:relative;flex:1 1 100%;min-width:0;margin-top:auto}
+.gal-nav{display:flex;gap:8px;justify-content:flex-end;margin-top:6px}
+.gal-nav button{all:unset;cursor:pointer;width:34px;height:34px;border-radius:999px;display:grid;place-items:center;font-size:18px;font-weight:700;background:#101521;color:#D4F25A;transition:opacity .2s}
+.gal-nav button:disabled{opacity:.3;cursor:default}
+.gal-nav button:focus-visible{outline:2px solid #1D7A43;outline-offset:2px}
+.gal-wrap.dark .gal-nav button{background:#D4F25A;color:#101521}
 #lb{position:fixed;inset:0;z-index:1000;background:rgba(10,13,20,.92);display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:24px;box-sizing:border-box}
 #lb.open{display:flex}
 #lb img{max-width:min(1400px,100%);max-height:80vh;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,.5);background:#fff}
@@ -632,6 +641,14 @@ document.querySelectorAll('header nav a, footer a').forEach(function(a){
 });
 })();
 
+</script>
+<script>
+document.querySelectorAll('.gal').forEach(function(g){var n=g.querySelectorAll('.gal-item').length;if(n<2)return;
+var w=document.createElement('div');w.className='gal-wrap'+(g.classList.contains('dark')?' dark':'');g.parentNode.insertBefore(w,g);w.appendChild(g);g.style.flex='none';
+var nav=document.createElement('div');nav.className='gal-nav';nav.innerHTML='<button type="button" aria-label="Previous screenshot">‹</button><button type="button" aria-label="Next screenshot">›</button>';w.appendChild(nav);
+var pv=nav.children[0],nx=nav.children[1];function step(d){var it=g.querySelector('.gal-item');g.scrollBy({left:d*(it.offsetWidth+16),behavior:'smooth'});}
+pv.onclick=function(){step(-1);};nx.onclick=function(){step(1);};
+function upd(){pv.disabled=g.scrollLeft<4;nx.disabled=g.scrollLeft+g.clientWidth>=g.scrollWidth-4;}g.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd);upd();});
 </script>
 <div id="lb" role="dialog" aria-modal="true" aria-label="Screenshot viewer"><button class="x" aria-label="Close">×</button><button class="pv" aria-label="Previous">‹</button><img alt=""><p></p><button class="nx" aria-label="Next">›</button></div>
 <script>
