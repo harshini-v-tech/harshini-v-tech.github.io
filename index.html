@@ -7,7 +7,29 @@
 <meta name="description" content="Harshini V – QA Engineer and Project Coordinator. 17 live projects across ERPs, SaaS platforms, mobile apps, e-commerce and business websites.">
 <meta property="og:title" content="Harshini V – QA Portfolio">
 <meta property="og:description" content="QA Engineer and Project Coordinator at Hancod. 17 projects, QA Lead on six.">
-<style>html{scroll-behavior:smooth}*{box-sizing:border-box}</style>
+<style>html{scroll-behavior:smooth}*{box-sizing:border-box}.shot{display:none !important}
+.gal{margin-top:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.gal.one{grid-template-columns:minmax(0,1fr)}
+.gal-item{all:unset;box-sizing:border-box;cursor:zoom-in;display:flex;flex-direction:column;border-radius:10px;overflow:hidden;border:1px solid #D9DEE7;background:#FFFFFF;transition:border-color .2s,box-shadow .2s}
+.gal-item:hover{border-color:#101521;box-shadow:0 14px 30px -18px rgba(16,21,33,.45)}
+.gal-item:focus-visible{outline:2px solid #1D7A43;outline-offset:2px}
+.gal-item img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top left;display:block;transition:transform .35s}
+.gal-item:hover img{transform:scale(1.03)}
+.gal-item span{font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.4;color:#4A5263;padding:8px 10px}
+.gal.dark .gal-item{border-color:#2E3647;background:#161C2A}
+.gal.dark .gal-item:hover{border-color:#D4F25A}
+.gal.dark .gal-item span{color:#A7B0C0}
+#lb{position:fixed;inset:0;z-index:1000;background:rgba(10,13,20,.92);display:none;align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:24px;box-sizing:border-box}
+#lb.open{display:flex}
+#lb img{max-width:min(1400px,100%);max-height:80vh;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,.5);background:#fff}
+#lb p{margin:0;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#EEF1F6;text-align:center}
+#lb button{all:unset;cursor:pointer;color:#101521;background:#D4F25A;border-radius:999px;width:40px;height:40px;display:grid;place-items:center;font-size:20px;font-weight:700}
+#lb button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+#lb .x{position:absolute;top:16px;right:16px}
+#lb .pv{position:absolute;left:16px;top:50%}
+#lb .nx{position:absolute;right:16px;top:50%}
+#lb.single .pv,#lb.single .nx{display:none}
+</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <style>
@@ -196,7 +218,7 @@ a{color:#101521}a:hover{color:#1D7A43}
 </ul>
 </div>
 
-<div style="flex: 1 1 100%; border: 1.5px dashed #3A4458; border-radius: 12px; padding: 20px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 1.6; color: #A7B0C0">SCREENSHOTS TO ADD · POS billing · Dashboard · Invoice/receipt print · KOT and Kitchen Display · Storefront · AI chatbot · Tablet layout</div>
+<div class="gal dark" style="flex: 1 1 100%"><button type="button" class="gal-item" data-src="assets/projects/duxbe-figma-review.webp" data-cap="Figma · design review before development"><img src="assets/projects/duxbe-figma-review.webp" alt="Duxbe screens reviewed in Figma" loading="lazy" decoding="async"><span>Figma · design review before development</span></button><button type="button" class="gal-item" data-src="assets/projects/duxbe-devtools-network.webp" data-cap="DevTools · network evidence for a bug report"><img src="assets/projects/duxbe-devtools-network.webp" alt="Duxbe settings page with the browser DevTools network panel open" loading="lazy" decoding="async"><span>DevTools · network evidence for a bug report</span></button><button type="button" class="gal-item" data-src="assets/projects/duxbe-supabase-auth.webp" data-cap="Supabase · verifying auth data (personal data blurred)"><img src="assets/projects/duxbe-supabase-auth.webp" alt="Supabase authentication users table with personal data blurred" loading="lazy" decoding="async"><span>Supabase · verifying auth data (personal data blurred)</span></button></div>
 
 </article>
 </div>
@@ -241,7 +263,7 @@ a{color:#101521}a:hover{color:#1D7A43}
 <li>Integration testing for consistent data across orders, stock and invoices.</li>
 <li>Functional, regression and UAT testing, with defects tracked through to closure.</li>
 </ul>
-<div class="shot">SCREENSHOTS TO ADD · SFA order capture · Customer list · ERP dashboard · Sales order to invoice · Inventory</div>
+<div class="gal one"><button type="button" class="gal-item" data-src="assets/projects/seoul-oasis-login.webp" data-cap="Seoul Oasis ERP · login"><img src="assets/projects/seoul-oasis-login.webp" alt="Seoul Oasis ERP login screen" loading="lazy" decoding="async"><span>Seoul Oasis ERP · login</span></button></div>
 </article>
 
 <article class="card">
@@ -426,7 +448,7 @@ a{color:#101521}a:hover{color:#1D7A43}
 <li>Integration testing with Duxbe so orders, stock and invoices stay consistent between store and ERP.</li>
 <li>Tested the shopping flow end to end, from listing to order history, plus regression.</li>
 </ul>
-<div class="shot">SCREENSHOTS TO ADD · Product listing · Product detail · Cart and checkout · Payment gateway · Order tracking · Matching order in Duxbe</div>
+<div class="gal one"><button type="button" class="gal-item" data-src="assets/projects/buy-and-trust-login.webp" data-cap="Buy and Trust · seller login"><img src="assets/projects/buy-and-trust-login.webp" alt="Buy and Trust seller login screen" loading="lazy" decoding="async"><span>Buy and Trust · seller login</span></button></div>
 </article>
 
 <article class="card">
@@ -602,6 +624,20 @@ document.querySelectorAll('header nav a, footer a').forEach(function(a){
 });
 })();
 
+</script>
+<div id="lb" role="dialog" aria-modal="true" aria-label="Screenshot viewer"><button class="x" aria-label="Close">×</button><button class="pv" aria-label="Previous">‹</button><img alt=""><p></p><button class="nx" aria-label="Next">›</button></div>
+<script>
+(function(){var lb=document.getElementById('lb'),im=lb.querySelector('img'),cp=lb.querySelector('p'),set=[],i=0,last=null;
+function show(){var b=set[i];im.src=b.dataset.src;im.alt=b.querySelector('img').alt;cp.textContent=b.dataset.cap+(set.length>1?'  ·  '+(i+1)+' / '+set.length:'');}
+function open(b){last=b;set=[].slice.call(b.closest('.gal').querySelectorAll('.gal-item'));i=set.indexOf(b);lb.classList.toggle('single',set.length<2);show();lb.classList.add('open');document.body.style.overflow='hidden';lb.querySelector('.x').focus();}
+function close(){lb.classList.remove('open');document.body.style.overflow='';if(last)last.focus();}
+function step(d){i=(i+d+set.length)%set.length;show();}
+document.querySelectorAll('.gal-item').forEach(function(b){b.addEventListener('click',function(){open(b);});});
+lb.querySelector('.x').onclick=close;lb.querySelector('.pv').onclick=function(){step(-1);};lb.querySelector('.nx').onclick=function(){step(1);};
+lb.addEventListener('click',function(e){if(e.target===lb)close();});
+document.addEventListener('keydown',function(e){if(!lb.classList.contains('open'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft'&&set.length>1)step(-1);if(e.key==='ArrowRight'&&set.length>1)step(1);});
+var sx=0;lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});lb.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50&&set.length>1)step(dx<0?1:-1);});
+})();
 </script>
 </body>
 </html>
